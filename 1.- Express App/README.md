@@ -17,3 +17,14 @@ npm install
 ```node
 node .
 ```
+
+## Routes
+
+We have two different available routes /data and /users
+
+```node
+127.0.0.1/data
+127.0.0.1/users
+```
+
+Check them out!
