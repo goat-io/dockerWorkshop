@@ -12,7 +12,7 @@ docker build --tag=mymongoimage .
 docker run mymongoimage
 ```
 
-## Can you find what is missing in our Docker RUN command? CHECK THE [DOCS](https://hub.docker.com/_/mongo)
+## Can you find what is missing in our Docker RUN command? CHECK THE [DOCS](https://hub.docker.com/_/mongo) and the Dockerfile
 
 We did not give the image the env variables that it requires. We can do that by including the -e flag.
 
@@ -37,7 +37,8 @@ Inlcude the -d flag the leave the process running in the background
 docker run -e "MONGO_DB_USER=user" -e "MONGO_DB_PASSWORD=password" -e "MONGO_INITDB_DATABASE=app" -d -p 27018:27017 mymongoimage
 ```
 
-## Connect it to a network
+
+## Connect it to a network (BEFORE THIS PLEASE MOVE TO THE EXPRESS example)
 
 ```shell
 docker run -e "MONGO_DB_USER=user" -e "MONGO_DB_PASSWORD=password" -e "MONGO_INITDB_DATABASE=app" -d -p 27018:27017 --network=myappnetwork --network-alias=mongo mymongoimage

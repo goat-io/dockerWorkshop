@@ -11,4 +11,4 @@ Please begin the workshop moving from folder 1 to Folder 4.
 
 Docker hub account
 Github account
-Node.js, Docker and Git installed
+Node.js, Docker, MongoCompass and Git installed
