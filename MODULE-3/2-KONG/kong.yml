@@ -1,0 +1,70 @@
+_format_version: "1.1"
+services:
+  - name: yesnoService
+    url: https://yesno.wtf/api
+    tags:
+      - yesNo
+      - service1
+    routes:
+      - name: yesnoService
+        strip_path: true
+        preserve_host: false
+        paths:
+          - /ouryesno
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+  - name: yesnoServiceAuth
+    url: https://yesno.wtf/api
+    tags:
+      - yesNo
+      - service1
+    plugins:
+      - name: oidc
+        config:
+          client_id: microservices
+          client_secret: 1ed9fa79-09a9-43c4-9528-bd5fc4864356
+          discovery: http://keycloak:8080/auth/realms/netlight/.well-known/openid-configuration
+          access_token_header_name: x-jwt-token
+          access_token_header_as_bearer: "yes"
+          disable_userinfo_header: "no"
+          disable_id_token_header: "no"
+    routes:
+      - name: yesnoServiceAuth
+        strip_path: true
+        preserve_host: false
+        paths:
+          - /ouryesnoAuth
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+  - name: catsAuth
+    url: https://api.thecatapi.com/v1/images/search?format=json
+    tags:
+      - yesNo
+      - service1
+    plugins:
+      - name: oidc
+        config:
+          client_id: microservices
+          client_secret: 1ed9fa79-09a9-43c4-9528-bd5fc4864356
+          discovery: http://keycloak:8080/auth/realms/netlight/.well-known/openid-configuration
+          access_token_header_name: x-jwt-token
+          access_token_header_as_bearer: "yes"
+          disable_userinfo_header: "no"
+          disable_id_token_header: "no"
+    routes:
+      - name: catsAuth
+        strip_path: true
+        preserve_host: false
+        paths:
+          - /cats
+        methods:
+          - GET
+        protocols:
+          - http
+          - https

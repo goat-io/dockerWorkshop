@@ -60,7 +60,7 @@ Both mongo and our express apps are running in isoleted environment. If we dont 
 docker network create myappnetwork
 ```
 
-## Restart mongo with connecting it to the network
+## Restart mongo with connecting it to the network (GO TO THE LAST COMMAND OF THE 1-MONGO section)
 
 ```shell
 docker run -p 3000:3000 --network=myappnetwork --network-alias=express myexpress
@@ -73,4 +73,3 @@ Also, lest leave the app running (-d flag)
 ```shell
 docker run -p 3000:3000 --network=myappnetwork --network-alias=express -d myexpress
 ```
-

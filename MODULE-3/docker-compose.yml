@@ -1,0 +1,57 @@
+version: "3.5"
+networks:
+  netlight:
+services:
+  ### MYSQL ################################################
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    networks:
+      - netlight
+  ### KEYCLOAK ################################################
+  keycloak:
+    build:
+      context: ./1-KEYCLOAK
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+    networks:
+      - netlight
+  ### KONG ################################################
+  kong:
+    build:
+      context: ./2-KONG
+    networks:
+      - netlight
+    environment:
+      - "KONG_DATABASE=off"
+      - "KONG_DECLARATIVE_CONFIG=/srv/kong.yml"
+      - "KONG_PG_PASSWORD=kongpassword"
+      - "KONG_PG_HOST=kong-database"
+      - "KONG_CASSANDRA_CONTACT_POINTS=kong-database"
+      - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
+      - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
+      - "KONG_PROXY_ERROR_LOG=/dev/stderr"
+      - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
+      - "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl"
+      - "KONG_CUSTOM_PLUGINS=upstream-basic-auth,oidc"
+      - "KONG_PLUGINS=bundled,oidc"
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+    restart: unless-stopped

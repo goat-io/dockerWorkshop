@@ -1,0 +1,1 @@
+FROM jboss/keycloak:7.0.0
