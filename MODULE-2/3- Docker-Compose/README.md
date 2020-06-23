@@ -20,4 +20,5 @@ MONGO_ROOT_PASSWORD=admin
 ## RUN your containers with docker-compose
 
 ```shell
+docker-compose up -d mongo express
 ```
